@@ -8,11 +8,12 @@ public class Deck : MonoBehaviour
     public GameObject cardPrefab;
 
     // List to store the Card objects in the deck
-    private List<Card> cards;
+    public List<Card> cards;
 
     // Creates and initializes a standard deck of 52 cards
     public void InitializeDeck()
     {
+        DestroyAllChildObjects();
         cards = new List<Card>();
 
         foreach (Card.Suit suit in System.Enum.GetValues(typeof(Card.Suit))) 
@@ -77,5 +78,16 @@ public class Deck : MonoBehaviour
         Card card = cards[0];
         cards.RemoveAt(0);
         return card;
+    }
+
+    // Destroy all child objects under the current object
+    private void DestroyAllChildObjects()
+    {
+        int childCount = transform.childCount;
+
+        for (int i = childCount - 1; i >= 0; i--) {
+            GameObject childObject = transform.GetChild(i).gameObject;
+            Destroy(childObject);
+        }
     }
 }

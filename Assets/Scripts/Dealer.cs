@@ -26,7 +26,7 @@ public class Dealer : MonoBehaviour
     }
 
     // Centers the card hand on the board by calculating the positions of the cards.
-    public void CenterCardHandOnBoard()
+    private void CenterCardHandOnBoard()
     {
         float cardSpacing = 0.12f; // Adjust this value to control the spacing between cards
 
@@ -44,12 +44,18 @@ public class Dealer : MonoBehaviour
     }
 
     // Calculates the total value of the dealer's hand
-    public int CalculateHandValue()
+    public int CalculateHandValue(bool includeHoleCard)
     {
         int totalValue = 0;
         bool hasAce = false;
 
-        foreach (Card card in hand) {
+        // Iterate over each card in the hand
+        for (int i = 0; i < hand.Count; i++) {
+            // Check if the current card is the hole card and exclude it if includeHoleCard is false
+            if (!includeHoleCard && i == 0)
+                continue;
+
+            Card card = hand[i];
             totalValue += card.Value;
 
             if (card.rank == Card.Rank.Ace) {
@@ -69,5 +75,17 @@ public class Dealer : MonoBehaviour
     public void ResetHand()
     {
         hand.Clear();
+        DestroyAllChildObjects();
+    }
+
+    // Destroy all child objects under the current object
+    private void DestroyAllChildObjects()
+    {
+        int childCount = transform.childCount;
+
+        for (int i = childCount - 1; i >= 0; i--) {
+            GameObject childObject = transform.GetChild(i).gameObject;
+            Destroy(childObject);
+        }
     }
 }
