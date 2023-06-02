@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     }
 
     // Centers the card hand on the board by calculating the positions of the cards.
-    public void CenterCardHandOnBoard()
+    private void CenterCardHandOnBoard()
     {
         float cardSpacing = 0.12f; // Adjust this value to control the spacing between cards
 
@@ -83,5 +83,17 @@ public class Player : MonoBehaviour
     public void ResetHand()
     {
         hand.Clear();
+        DestroyAllChildObjects();
+    }
+
+    // Destroy all child objects under the current object
+    private void DestroyAllChildObjects()
+    {
+        int childCount = transform.childCount;
+
+        for (int i = childCount - 1; i >= 0; i--) {
+            GameObject childObject = transform.GetChild(i).gameObject;
+            Destroy(childObject);
+        }
     }
 }

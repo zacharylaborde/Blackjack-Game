@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private Player player;
     private Dealer dealer;
     private int initialBankroll = 1000;
+    private Card dealerCard1;
 
     // Constants
     private const int MinimumBet = 1;
@@ -108,7 +109,7 @@ public class GameManager : MonoBehaviour
         player.AddCardToHand(playerCard1);        
 
         // Deal FIRST card to the DEALER
-        Card dealerCard1 = deck.DrawCard();
+        dealerCard1 = deck.DrawCard();
         dealerCard1.transform.SetParent(dealer.transform, true);
         dealerCard1.transform.Rotate(0f, 0f, 180f); // Rotate the card by 180 degrees on the Z-axis
         dealer.AddCardToHand(dealerCard1);
@@ -133,7 +134,9 @@ public class GameManager : MonoBehaviour
         standButton.gameObject.SetActive(true);
         standButton.interactable = true;
 
-
+        // Update player and dealer UI
+        playerHandText.text = "Hand: " + player.CalculateHandValue().ToString();
+        dealerHandText.text = "Dealer: " + dealer.CalculateHandValue(false).ToString();     // does not count the hole card value
     }
 
     // Allows the player to place a bet within the predefined limits
@@ -171,7 +174,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Check if the current bet meets the condition for enabling the Deal button
-        if (player.CurrentBet >= 1) {
+        if (player.CurrentBet >= MinimumBet) {
             dealButton.gameObject.SetActive(true);
             dealButton.interactable = true;
         }
@@ -204,6 +207,16 @@ public class GameManager : MonoBehaviour
             Card card = deck.DrawCard();
             card.transform.SetParent(player.transform, true);
             player.AddCardToHand(card);
+
+            // Update playerhand text UI
+            playerHandText.text = "Hand: " + player.CalculateHandValue().ToString();
+
+            // Check if the player busts
+            if (player.CalculateHandValue() > 21) {
+                Debug.Log("Player busts! Round ends.");
+                EvaluateRoundResult();
+                //StartNewRound();
+            }
         }
         else {
             Debug.LogWarning("Cannot exceed max card limit.");
@@ -213,26 +226,39 @@ public class GameManager : MonoBehaviour
     // Proceeds to the dealer's turn
     public void PlayerStand()
     {
+        // Flip the hole card & update dealer's hand UI
+        dealerCard1.transform.Rotate(0f, 0f, 180f); // Rotate the card by 180 degrees on the Z-axis
+        dealerHandText.text = "Dealer: " + dealer.CalculateHandValue(true).ToString();
+
         DealerTurn();
         EvaluateRoundResult();
         UpdateBankroll();
-        StartNewRound();
+        //StartNewRound();
     }
 
     // Controls the dealer's actions, including hitting or standing based on predefined rules
     void DealerTurn()
     {
-        while (dealer.CalculateHandValue() < 17) {
+        while (dealer.CalculateHandValue(true) < 17) {
             Card card = deck.DrawCard();
             dealer.AddCardToHand(card);
+
+            // Update dealerhand text UI
+            dealerHandText.text = "Dealer: " + dealer.CalculateHandValue(true).ToString();
         }
     }
 
     // Compares the player's and dealer's hand values to determine the round result
     void EvaluateRoundResult()
     {
+        // Disable Hit and Stand Buttons
+        hitButton.gameObject.SetActive(false);
+        hitButton.interactable = false;
+        standButton.gameObject.SetActive(false);
+        standButton.interactable = false;
+
         int playerHandValue = player.CalculateHandValue();
-        int dealerHandValue = dealer.CalculateHandValue();
+        int dealerHandValue = dealer.CalculateHandValue(true);
 
         if (playerHandValue > 21) {
             // Player busts, dealer wins
@@ -260,7 +286,7 @@ public class GameManager : MonoBehaviour
     void UpdateBankroll()
     {
         int playerHandValue = player.CalculateHandValue();
-        int dealerHandValue = dealer.CalculateHandValue();
+        int dealerHandValue = dealer.CalculateHandValue(true);
 
         if (playerHandValue > 21) {
             // Player busts, lose the bet
