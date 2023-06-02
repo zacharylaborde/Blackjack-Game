@@ -57,6 +57,8 @@ sysinfo.txt
 
 # Unity Project Folders
 Packages/
+Blackjack_Data/
+MonoBleedingEdge/
 
 # Builds
 *.apk
@@ -73,3 +75,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Blackjack.exe
+UnityCrashHandler64.exe
+UnityPlayer.dll
