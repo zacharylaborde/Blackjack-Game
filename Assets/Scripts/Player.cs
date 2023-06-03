@@ -6,20 +6,20 @@ public class Player : MonoBehaviour
 {
     // Fields
     private List<Card> hand;      // Stores the player's current hand of cards
-    public int bankroll;          // Stores the player's available funds
-    public int currentBet;        // Stores the player's current bet amount
+    public double bankroll;          // Stores the player's available funds
+    public double currentBet;        // Stores the player's current bet amount
 
     // Properties
     public List<Card> Hand {
         get { return hand; }
     }
 
-    public int Bankroll {
+    public double Bankroll {
         get { return bankroll; }
         set { bankroll = value; }
     }
 
-    public int CurrentBet {
+    public double CurrentBet {
         get { return currentBet; }
         set { currentBet = value; }
     }

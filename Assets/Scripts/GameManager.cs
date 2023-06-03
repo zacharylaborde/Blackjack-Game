@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     public Button hitButton;
     public Button standButton;
     public Button resetBetButton;
+    public Button newGameButton;
+    public Button newRoundButton;
+    public Button quitButton;
 
     public TextMeshProUGUI bankrollText;
     public TextMeshProUGUI betText;
@@ -137,6 +140,13 @@ public class GameManager : MonoBehaviour
         // Update player and dealer UI
         playerHandText.text = "Hand: " + player.CalculateHandValue().ToString();
         dealerHandText.text = "Dealer: " + dealer.CalculateHandValue(false).ToString();     // does not count the hole card value
+
+        // Check if the player has natural 21
+        if (player.CalculateHandValue() == 21) {
+            EvaluateRoundResult();
+            UpdateBankroll();
+            PostRoundActions();
+        }
     }
 
     // Allows the player to place a bet within the predefined limits
@@ -144,8 +154,8 @@ public class GameManager : MonoBehaviour
     {
         if (player.Bankroll > 0) {
 
-            int newBetAmount = player.CurrentBet + amount;
-            int betDifference = amount - player.Bankroll;
+            double newBetAmount = player.CurrentBet + amount;
+            double betDifference = amount - player.Bankroll;
 
             // Check if the new bet amount is within the maximum limit and player has enough funds
             if (newBetAmount <= MaximumBet && (player.Bankroll - amount) >= 0) {
@@ -183,7 +193,7 @@ public class GameManager : MonoBehaviour
     // Resets the current bet amount to 0 and adds the previous bet amount back to the player's bankroll.
     public void ResetBet()
     {
-        int totalBetAmount = player.CurrentBet;
+        double totalBetAmount = player.CurrentBet;
 
         // Reset the current bet amount to 0
         player.CurrentBet = 0;
@@ -212,10 +222,10 @@ public class GameManager : MonoBehaviour
             playerHandText.text = "Hand: " + player.CalculateHandValue().ToString();
 
             // Check if the player busts
-            if (player.CalculateHandValue() > 21) {
-                Debug.Log("Player busts! Round ends.");
+            if (player.CalculateHandValue() > 21) {                
                 EvaluateRoundResult();
-                //StartNewRound();
+                UpdateBankroll();
+                PostRoundActions();
             }
         }
         else {
@@ -233,18 +243,30 @@ public class GameManager : MonoBehaviour
         DealerTurn();
         EvaluateRoundResult();
         UpdateBankroll();
-        //StartNewRound();
+        PostRoundActions();        
     }
 
     // Controls the dealer's actions, including hitting or standing based on predefined rules
     void DealerTurn()
     {
-        while (dealer.CalculateHandValue(true) < 17) {
+        int dealerHandValue = dealer.CalculateHandValue(true);
+        int playerHandValue = player.CalculateHandValue();
+
+        // Check if the dealer's hand beats the player's hand
+        if (dealerHandValue > playerHandValue) {
+            // Update dealerhand text UI
+            dealerHandText.text = "Dealer: " + dealer.CalculateHandValue(true).ToString();
+            return;
+        }
+
+        while (dealerHandValue < 17) {
             Card card = deck.DrawCard();
             dealer.AddCardToHand(card);
 
             // Update dealerhand text UI
             dealerHandText.text = "Dealer: " + dealer.CalculateHandValue(true).ToString();
+
+            dealerHandValue = dealer.CalculateHandValue(true);            
         }
     }
 
@@ -260,7 +282,11 @@ public class GameManager : MonoBehaviour
         int playerHandValue = player.CalculateHandValue();
         int dealerHandValue = dealer.CalculateHandValue(true);
 
-        if (playerHandValue > 21) {
+        if (playerHandValue == 21 && player.Hand.Count == 2) {
+            // Player has a natural blackjack,
+            Debug.Log("Player has blackjack! Player wins.");
+        }
+        else if (playerHandValue > 21) {
             // Player busts, dealer wins
             Debug.Log("Player busts! Dealer wins.");
         }
@@ -290,37 +316,51 @@ public class GameManager : MonoBehaviour
 
         if (playerHandValue > 21) {
             // Player busts, lose the bet
-            player.Bankroll += player.CurrentBet;
         }
         else if (dealerHandValue > 21) {
-            // Dealer busts, win the bet
+            // Dealer busts, win the bet; Payout is 1:1
             player.Bankroll += player.CurrentBet * 2;
         }
         else if (playerHandValue == dealerHandValue) {
             // It's a tie, return the bet
             player.Bankroll += player.CurrentBet;
         }
+        else if (playerHandValue == 21 && player.Hand.Count == 2) {
+            // Player has a natural blackjack, Payout is 3:2
+            player.Bankroll += player.CurrentBet * 2.5;
+        }
         else if (playerHandValue > dealerHandValue) {
-            // Player wins, win the bet
+            // Player wins, win the bet; Payout is 1:1
             player.Bankroll += player.CurrentBet * 2;
         }
         else {
             // Dealer wins, lose the bet
-            player.Bankroll += player.CurrentBet;
         }
+
+        // Reset player's current bet
+        player.CurrentBet = 0;
+
+        // Update UI for Bankroll and Bet
+        bankrollText.text = "Balance: $" + player.Bankroll.ToString();
+        betText.text = "Bet: $" + player.CurrentBet.ToString();
+
     }
 
     // Prompts the player to start a new round or quit the game
-    void StartNewRound()
+    public void StartNewRound()
     {
         // Disable the text for player and dealer hands
         playerHandText.gameObject.SetActive(false);
         dealerHandText.gameObject.SetActive(false);
+        // Disable New Round and Quit buttons
+        newGameButton.gameObject.SetActive(false);
+        newGameButton.interactable = false;
+        newRoundButton.gameObject.SetActive(false);
+        newRoundButton.interactable = false;
+        quitButton.gameObject.SetActive(false);
+        quitButton.interactable = false;
 
         if (player.Bankroll >= MinimumBet) {
-            // Reset player's current bet
-            player.CurrentBet = 0;
-
             // Enable Betting
             EnableAllChipButtonInteractables();
 
@@ -343,5 +383,39 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game over. Insufficient funds to continue.");
             // End the game or display a game over message
         }
+    }
+
+    // Method to quit the application
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
+
+    // Method to restart the game
+    public void RestartGame()
+    {
+        // Reset necessary game state variables here
+
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Method for post-round actions
+    public void PostRoundActions()
+    {
+        if (player.Bankroll > 0) {
+            // Player has a positive balance
+            // Enable New Round and Quit buttons
+            newRoundButton.gameObject.SetActive(true);
+            newRoundButton.interactable = true;
+        }
+        else {
+            // Player has a balance of 0
+            newGameButton.gameObject.SetActive(true);
+            newGameButton.interactable = true;
+        }
+        // Enable Quit button
+        quitButton.gameObject.SetActive(true);
+        quitButton.interactable = true;
     }
 }
