@@ -40,7 +40,7 @@ public class Card : MonoBehaviour
 
     // Private variables for value and Ace toggle
     private int value;
-    private bool isAceHigh = false;
+    private bool isAceHigh = true;
 
     // Property to retrieve the value of the card
     public int Value

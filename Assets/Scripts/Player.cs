@@ -61,19 +61,20 @@ public class Player : MonoBehaviour
     public int CalculateHandValue()
     {
         int totalValue = 0;
-        bool hasAce = false;
+        int aceCount = 0;
 
         foreach (Card card in hand) {
             totalValue += card.Value;
 
             if (card.rank == Card.Rank.Ace) {
-                hasAce = true;
+                aceCount++;
             }
         }
 
-        // If the hand has an Ace and the total value is <= 11, treat Ace as 11
-        if (hasAce && totalValue <= 11) {
-            totalValue += 10;
+        // Adjust the value of Aces if needed
+        while (aceCount > 0 && totalValue > 21) {
+            totalValue -= 10;
+            aceCount--;
         }
 
         return totalValue;

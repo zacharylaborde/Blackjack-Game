@@ -47,7 +47,7 @@ public class Dealer : MonoBehaviour
     public int CalculateHandValue(bool includeHoleCard)
     {
         int totalValue = 0;
-        bool hasAce = false;
+        int aceCount = 0;
 
         // Iterate over each card in the hand
         for (int i = 0; i < hand.Count; i++) {
@@ -59,13 +59,14 @@ public class Dealer : MonoBehaviour
             totalValue += card.Value;
 
             if (card.rank == Card.Rank.Ace) {
-                hasAce = true;
+                aceCount++;
             }
         }
 
-        // If the hand has an Ace and the total value is <= 11, treat Ace as 11
-        if (hasAce && totalValue <= 11) {
-            totalValue += 10;
+        // Adjust the value of Aces if needed
+        while (aceCount > 0 && totalValue > 21) {
+            totalValue -= 10;
+            aceCount--;
         }
 
         return totalValue;

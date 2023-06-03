@@ -1893,7 +1893,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3ec36332c02c1c1488b06496585b2009, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d5bdd88647ce72f458d8c4eaf558713c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2234,6 +2234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 0}
+  cards: []
 --- !u!1 &1449436273
 GameObject:
   m_ObjectHideFlags: 0
