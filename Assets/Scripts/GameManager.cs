@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -177,10 +178,18 @@ public class GameManager : MonoBehaviour
             }
             else {
                 Debug.LogWarning("Cannot exceed the maximum bet.");
+
+                // Display dialog box with message about maximum bet for user to see
+                EditorUtility.DisplayDialog("Maximum bet reach!",
+                    "Cannot exceed the maximum bet of $" + MaximumBet, "OK");
             }
         }
         else {
+            // Game is over before we can get here.
             Debug.LogWarning("Cannot have a negative balance.");
+
+            EditorUtility.DisplayDialog("Not enough money!",
+                    "You don't have enough money to place this bet of $" + amount, "OK");
         }
 
         // Check if the current bet meets the condition for enabling the Deal button
