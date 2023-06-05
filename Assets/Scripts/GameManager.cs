@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
     public List<ButtonInteractable> buttonInteractables;    // List of ButtonInteractable scripts
     public List<TextMeshProUGUI> chipTexts;                 // List of Chip Texts
 
+    // Popup message
+    public GameObject invalidBetPanel;
+    public Coroutine popupTimer;
+
     private void Start()
     {
         StartGame();
@@ -179,17 +183,13 @@ public class GameManager : MonoBehaviour
             else {
                 Debug.LogWarning("Cannot exceed the maximum bet.");
 
-                // Display dialog box with message about maximum bet for user to see
-                EditorUtility.DisplayDialog("Maximum bet reach!",
-                    "Cannot exceed the maximum bet of $" + MaximumBet, "OK");
+                // Display popup message
+                ShowPopup(2);
             }
         }
         else {
             // Game is over before we can get here.
             Debug.LogWarning("Cannot have a negative balance.");
-
-            EditorUtility.DisplayDialog("Not enough money!",
-                    "You don't have enough money to place this bet of $" + amount, "OK");
         }
 
         // Check if the current bet meets the condition for enabling the Deal button
@@ -426,5 +426,29 @@ public class GameManager : MonoBehaviour
         // Enable Quit button
         quitButton.gameObject.SetActive(true);
         quitButton.interactable = true;
+    }
+
+    public void ShowPopup(float time) 
+    {
+        invalidBetPanel.SetActive(true);
+
+        popupTimer = StartCoroutine(CountDown(time));
+    }
+
+    // time is in seconds
+    public IEnumerator CountDown(float time)
+    {
+        float startTime = time;
+
+        // loop and wait 1 second per loop
+        while (startTime > 0)
+        {
+            // Wait one second
+            yield return new WaitForSeconds(1);
+            
+            startTime--;
+        }
+
+        invalidBetPanel.SetActive(false);
     }
 }
