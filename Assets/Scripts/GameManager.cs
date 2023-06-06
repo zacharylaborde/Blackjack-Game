@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,10 +34,6 @@ public class GameManager : MonoBehaviour
 
     public List<ButtonInteractable> buttonInteractables;    // List of ButtonInteractable scripts
     public List<TextMeshProUGUI> chipTexts;                 // List of Chip Texts
-
-    // Popup message
-    public GameObject invalidBetPanel;
-    public Coroutine popupTimer;
 
     private void Start()
     {
@@ -96,6 +91,9 @@ public class GameManager : MonoBehaviour
                 chipText.gameObject.SetActive(true);
             }
         }
+
+        // Update chip button visibility
+        UpdateChipButtonVisibility();
     }
 
     // Deal the initial two cards to the player and dealer
@@ -181,21 +179,35 @@ public class GameManager : MonoBehaviour
                 betText.text = "Bet: $" + player.CurrentBet.ToString();
             }
             else {
-                Debug.LogWarning("Cannot exceed the maximum bet.");
-
-                // Display popup message
-                ShowPopup(2);
+                Debug.LogWarning("Invalid Bet Amount: The entered bet amount is not within the allowed range. Please enter a value between the minimum and maximum bet limits.");
             }
         }
         else {
-            // Game is over before we can get here.
-            Debug.LogWarning("Cannot have a negative balance.");
+            Debug.LogWarning("Insufficient Balance: Your current balance is not sufficient to place the selected bet.");
         }
+
+        // Update chip button visibility
+        UpdateChipButtonVisibility();
 
         // Check if the current bet meets the condition for enabling the Deal button
         if (player.CurrentBet >= MinimumBet) {
             dealButton.gameObject.SetActive(true);
             dealButton.interactable = true;
+        }
+    }
+
+    // Set the visibility of chip buttons based on the player's bankroll
+    private void UpdateChipButtonVisibility()
+    {
+        int[] chipDenominations = { 1, 5, 25, 100, 500 };
+        int[] betLimits = { 1, 5, 25, 100, 500 };
+
+        for (int i = 0; i < chipDenominations.Length; i++) {
+            bool canAffordChip = player.Bankroll >= chipDenominations[i];
+            bool withinBetLimit = player.CurrentBet + chipDenominations[i] <= MaximumBet;
+
+            buttonInteractables[i].gameObject.SetActive(canAffordChip && withinBetLimit);
+            chipTexts[i].gameObject.SetActive(canAffordChip && withinBetLimit);
         }
     }
 
@@ -217,6 +229,9 @@ public class GameManager : MonoBehaviour
         // Disable Deal button because CurrentBet is 0
         dealButton.gameObject.SetActive(false);
         dealButton.interactable = false;
+
+        // Update chip button visibility
+        UpdateChipButtonVisibility();
     }
 
     // Deals an additional card to the player
@@ -367,7 +382,7 @@ public class GameManager : MonoBehaviour
         newRoundButton.gameObject.SetActive(false);
         newRoundButton.interactable = false;
         quitButton.gameObject.SetActive(false);
-        quitButton.interactable = false;
+        quitButton.interactable = false;        
 
         if (player.Bankroll >= MinimumBet) {
             // Enable Betting
@@ -426,29 +441,5 @@ public class GameManager : MonoBehaviour
         // Enable Quit button
         quitButton.gameObject.SetActive(true);
         quitButton.interactable = true;
-    }
-
-    public void ShowPopup(float time) 
-    {
-        invalidBetPanel.SetActive(true);
-
-        popupTimer = StartCoroutine(CountDown(time));
-    }
-
-    // time is in seconds
-    public IEnumerator CountDown(float time)
-    {
-        float startTime = time;
-
-        // loop and wait 1 second per loop
-        while (startTime > 0)
-        {
-            // Wait one second
-            yield return new WaitForSeconds(1);
-            
-            startTime--;
-        }
-
-        invalidBetPanel.SetActive(false);
     }
 }

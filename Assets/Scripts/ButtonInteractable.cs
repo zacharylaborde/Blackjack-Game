@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class ButtonInteractable : MonoBehaviour, IPointerClickHandler
+public class ButtonInteractable : MonoBehaviour
 {
     private GameManager gameManager;
     public int betAmount;
@@ -19,7 +18,7 @@ public class ButtonInteractable : MonoBehaviour, IPointerClickHandler
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void OnMouseDown()
     {
         // Check if the script is interactable
         if (isInteractable) {
