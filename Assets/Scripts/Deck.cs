@@ -77,6 +77,11 @@ public class Deck : MonoBehaviour
 
         Card card = cards[0];
         cards.RemoveAt(0);
+
+        // Play a sound here
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
+
         return card;
     }
 

@@ -6,6 +6,7 @@ public class Dealer : MonoBehaviour
 {
     // Fields
     private List<Card> hand;       // Stores the dealer's current hand of cards
+    public float cardDealSpeed = 4.0f;  // Speed at which the card moves across the board
 
     // Properties
     public List<Card> Hand {
@@ -22,7 +23,7 @@ public class Dealer : MonoBehaviour
     public void AddCardToHand(Card card)
     {
         hand.Add(card);
-        CenterCardHandOnBoard();
+        StartCoroutine(MoveCardAcrossBoard(card));
     }
 
     // Centers the card hand on the board by calculating the positions of the cards.
@@ -41,6 +42,22 @@ public class Dealer : MonoBehaviour
             Vector3 cardPosition = startPosition + new Vector3(i * cardSpacing, 0.0f, 0.0f);
             hand[i].transform.position = cardPosition;
         }
+    }
+
+    // Coroutine to move the card across the board
+    private IEnumerator MoveCardAcrossBoard(Card card)
+    {
+        float elapsedTime = 0.0f;
+        Vector3 startPosition = card.transform.position;
+        Vector3 targetPosition = transform.position;
+
+        while (elapsedTime < 1.0f) {
+            elapsedTime += Time.deltaTime * cardDealSpeed;
+            card.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime);
+            yield return null;
+        }
+
+        CenterCardHandOnBoard(); // Recenter the card hand after the card has reached its final position
     }
 
     // Calculates the total value of the dealer's hand

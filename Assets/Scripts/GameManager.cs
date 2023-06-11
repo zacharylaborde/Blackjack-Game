@@ -33,11 +33,18 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI playerHandText;
     public TextMeshProUGUI dealerHandText;
     public TextMeshProUGUI messageText;
-    public TextMeshProUGUI minBetText;
-    public TextMeshProUGUI maxBetText;
 
     public List<ButtonInteractable> buttonInteractables;    // List of ButtonInteractable scripts
     public List<TextMeshProUGUI> chipTexts;                 // List of Chip Texts
+
+    // Sound and Music
+    public AudioClip blackjackSound;
+    public AudioClip playerWinsSound;
+    public AudioClip dealerWinsSound;
+    public AudioClip pushSound;
+
+    public AudioSource soundEffectsSource;
+    public AudioSource backgroundMusicSource;
 
     private void Start()
     {
@@ -47,6 +54,10 @@ public class GameManager : MonoBehaviour
     // Start the game
     void StartGame()
     {
+        // Initialize Audio Sources
+        soundEffectsSource = gameObject.AddComponent<AudioSource>();
+        backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+
         // Initialize the deck
         deck = GameObject.Find("Deck").GetComponent<Deck>();
 
@@ -84,10 +95,6 @@ public class GameManager : MonoBehaviour
         // Disable place bets message to player
         messageText.gameObject.SetActive(false);
 
-        // Disable bet limit text
-        minBetText.gameObject.SetActive(false);
-        maxBetText.gameObject.SetActive(false);
-
         // Disable chip visability
         bettingChips.gameObject.SetActive(false);
     }
@@ -116,13 +123,8 @@ public class GameManager : MonoBehaviour
         messageText.text = "Place Bets!";
         messageText.gameObject.SetActive(true);
 
-        // Enable bet limit text
-        minBetText.gameObject.SetActive(true);
-        maxBetText.gameObject.SetActive(true);
-
         // Enable chip visability
         bettingChips.gameObject.SetActive(true);
-
     }
 
     // Deal the initial two cards to the player and dealer
@@ -336,34 +338,40 @@ public class GameManager : MonoBehaviour
         int dealerHandValue = dealer.CalculateHandValue(true);
 
         if (playerHandValue == 21 && player.Hand.Count == 2) {
-            // Player has a natural blackjack,
+            // Player has a natural blackjack
             Debug.Log("Player has blackjack! Player wins.");
             messageText.text = "Player Wins!";
+            soundEffectsSource.PlayOneShot(blackjackSound, 1.0f);
         }
         else if (playerHandValue > 21) {
             // Player busts, dealer wins
             Debug.Log("Player busts! Dealer wins.");
             messageText.text = "Dealer Wins!";
+            soundEffectsSource.PlayOneShot(dealerWinsSound, 1.0f);
         }
         else if (dealerHandValue > 21) {
             // Dealer busts, player wins
             Debug.Log("Dealer busts! Player wins.");
             messageText.text = "Player Wins!";
+            soundEffectsSource.PlayOneShot(playerWinsSound, 1.0f);
         }
         else if (playerHandValue == dealerHandValue) {
             // It's a tie
             Debug.Log("It's a tie.");
             messageText.text = "Push!";
+            soundEffectsSource.PlayOneShot(pushSound, 1.0f);
         }
         else if (playerHandValue > dealerHandValue) {
             // Player wins
             Debug.Log("Player wins.");
             messageText.text = "Player Wins!";
+            soundEffectsSource.PlayOneShot(playerWinsSound, 1.0f);
         }
         else {
             // Dealer wins
             Debug.Log("Dealer wins.");
             messageText.text = "Dealer Wins!";
+            soundEffectsSource.PlayOneShot(dealerWinsSound, 1.0f);
         }
 
         // Enable round result message to player
@@ -389,7 +397,7 @@ public class GameManager : MonoBehaviour
         }
         else if (playerHandValue == 21 && player.Hand.Count == 2) {
             // Player has a natural blackjack, Payout is 3:2
-            player.Bankroll += player.CurrentBet * 2.5;
+            player.Bankroll += (int)System.Math.Floor(player.CurrentBet * 2.5);
         }
         else if (playerHandValue > dealerHandValue) {
             // Player wins, win the bet; Payout is 1:1
