@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private Dealer dealer;
     private Card dealerCard1;
     private GameObject bettingChips;
-    private int initialBankroll = 1000;      
+    private int initialBankroll = 1000;
 
     // Constants
     private const int MinimumBet = 1;
@@ -28,11 +28,13 @@ public class GameManager : MonoBehaviour
     public Button newRoundButton;
     public Button quitButton;
 
+    // Game Text
     public TextMeshProUGUI bankrollText;
     public TextMeshProUGUI betText;
     public TextMeshProUGUI playerHandText;
     public TextMeshProUGUI dealerHandText;
-    public TextMeshProUGUI messageText;
+
+    public Image messageImage;
 
     public List<ButtonInteractable> buttonInteractables;    // List of ButtonInteractable scripts
     public List<TextMeshProUGUI> chipTexts;                 // List of Chip Texts
@@ -92,8 +94,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Disable place bets message to player
-        messageText.gameObject.SetActive(false);
+        // Disable place message text along with the background
+        messageImage.gameObject.SetActive(false);
 
         // Disable chip visability
         bettingChips.gameObject.SetActive(false);
@@ -102,15 +104,15 @@ public class GameManager : MonoBehaviour
     // Method to enable all ButtonInteractable scripts
     void EnableAllChipButtonInteractables()
     {
-        resetBetButton.gameObject.SetActive(true);
-        resetBetButton.interactable = true;
+        //resetBetButton.gameObject.SetActive(true);
+        //resetBetButton.interactable = true;
 
         foreach (var buttonInteractable in buttonInteractables) {
             if (buttonInteractable != null) {
                 buttonInteractable.isInteractable = true;
             }
         }
-        foreach(var chipText in chipTexts) {
+        foreach (var chipText in chipTexts) {
             if (chipText != null) {
                 chipText.gameObject.SetActive(true);
             }
@@ -119,9 +121,9 @@ public class GameManager : MonoBehaviour
         // Update chip button visibility
         UpdateChipButtonVisibility();
 
-        // Enable place bets message to player
-        messageText.text = "Place Bets!";
-        messageText.gameObject.SetActive(true);
+        // Enable place bets message to player along with the background
+        messageImage.GetComponentInChildren<TextMeshProUGUI>().text = "Place Bets!";
+        messageImage.gameObject.SetActive(true);
 
         // Enable chip visability
         bettingChips.gameObject.SetActive(true);
@@ -143,7 +145,7 @@ public class GameManager : MonoBehaviour
         // Deal FIRST card to the PLAYER
         Card playerCard1 = deck.DrawCard();
         playerCard1.transform.SetParent(player.transform, true);
-        player.AddCardToHand(playerCard1);        
+        player.AddCardToHand(playerCard1);
 
         // Deal FIRST card to the DEALER
         dealerCard1 = deck.DrawCard();
@@ -180,16 +182,19 @@ public class GameManager : MonoBehaviour
             EvaluateRoundResult();
             UpdateBankroll();
             PostRoundActions();
-        }        
+        }
     }
 
     // Allows the player to place a bet within the predefined limits
     public void PlaceBet(int amount)
-    {        
+    {
         if (player.Bankroll > 0) {
 
             double newBetAmount = player.CurrentBet + amount;
             double betDifference = amount - player.Bankroll;
+
+            resetBetButton.gameObject.SetActive(true);
+            resetBetButton.interactable = true;
 
             // Check if the new bet amount is within the maximum limit and player has enough funds
             if (newBetAmount <= MaximumBet && (player.Bankroll - amount) >= 0) {
@@ -261,6 +266,9 @@ public class GameManager : MonoBehaviour
         dealButton.gameObject.SetActive(false);
         dealButton.interactable = false;
 
+        resetBetButton.gameObject.SetActive(false);
+        resetBetButton.interactable = false;
+
         // Update chip button visibility
         UpdateChipButtonVisibility();
     }
@@ -277,7 +285,7 @@ public class GameManager : MonoBehaviour
             playerHandText.text = "Hand: " + player.CalculateHandValue().ToString();
 
             // Check if the player busts
-            if (player.CalculateHandValue() > 21) {                
+            if (player.CalculateHandValue() > 21) {
                 EvaluateRoundResult();
                 UpdateBankroll();
                 PostRoundActions();
@@ -298,7 +306,7 @@ public class GameManager : MonoBehaviour
         DealerTurn();
         EvaluateRoundResult();
         UpdateBankroll();
-        PostRoundActions();        
+        PostRoundActions();
     }
 
     // Controls the dealer's actions, including hitting or standing based on predefined rules
@@ -316,12 +324,13 @@ public class GameManager : MonoBehaviour
 
         while (dealerHandValue < 17) {
             Card card = deck.DrawCard();
+            card.transform.SetParent(dealer.transform, true);
             dealer.AddCardToHand(card);
 
             // Update dealerhand text UI
             dealerHandText.text = "Dealer: " + dealer.CalculateHandValue(true).ToString();
 
-            dealerHandValue = dealer.CalculateHandValue(true);            
+            dealerHandValue = dealer.CalculateHandValue(true);
         }
     }
 
@@ -340,42 +349,42 @@ public class GameManager : MonoBehaviour
         if (playerHandValue == 21 && player.Hand.Count == 2) {
             // Player has a natural blackjack
             Debug.Log("Player has blackjack! Player wins.");
-            messageText.text = "Player Wins!";
+            messageImage.GetComponentInChildren<TextMeshProUGUI>().text = "Player Wins!";
             soundEffectsSource.PlayOneShot(blackjackSound, 1.0f);
         }
         else if (playerHandValue > 21) {
             // Player busts, dealer wins
             Debug.Log("Player busts! Dealer wins.");
-            messageText.text = "Dealer Wins!";
+            messageImage.GetComponentInChildren<TextMeshProUGUI>().text = "Dealer Wins!";
             soundEffectsSource.PlayOneShot(dealerWinsSound, 1.0f);
         }
         else if (dealerHandValue > 21) {
             // Dealer busts, player wins
             Debug.Log("Dealer busts! Player wins.");
-            messageText.text = "Player Wins!";
+            messageImage.GetComponentInChildren<TextMeshProUGUI>().text = "Player Wins!";
             soundEffectsSource.PlayOneShot(playerWinsSound, 1.0f);
         }
         else if (playerHandValue == dealerHandValue) {
             // It's a tie
             Debug.Log("It's a tie.");
-            messageText.text = "Push!";
+            messageImage.GetComponentInChildren<TextMeshProUGUI>().text = "Push!";
             soundEffectsSource.PlayOneShot(pushSound, 1.0f);
         }
         else if (playerHandValue > dealerHandValue) {
             // Player wins
             Debug.Log("Player wins.");
-            messageText.text = "Player Wins!";
+            messageImage.GetComponentInChildren<TextMeshProUGUI>().text = "Player Wins!";
             soundEffectsSource.PlayOneShot(playerWinsSound, 1.0f);
         }
         else {
             // Dealer wins
             Debug.Log("Dealer wins.");
-            messageText.text = "Dealer Wins!";
+            messageImage.GetComponentInChildren<TextMeshProUGUI>().text = "Dealer Wins!";
             soundEffectsSource.PlayOneShot(dealerWinsSound, 1.0f);
         }
 
         // Enable round result message to player
-        messageText.gameObject.SetActive(true);
+        messageImage.gameObject.SetActive(true);
     }
 
     // Updates the player's bankroll based on the round result
@@ -420,7 +429,7 @@ public class GameManager : MonoBehaviour
     public void StartNewRound()
     {
         // Disable message text
-        messageText.gameObject.SetActive(false);
+        messageImage.gameObject.SetActive(false);
         // Disable the text for player and dealer hands
         playerHandText.gameObject.SetActive(false);
         dealerHandText.gameObject.SetActive(false);
@@ -430,7 +439,7 @@ public class GameManager : MonoBehaviour
         newRoundButton.gameObject.SetActive(false);
         newRoundButton.interactable = false;
         quitButton.gameObject.SetActive(false);
-        quitButton.interactable = false;        
+        quitButton.interactable = false;
 
         if (player.Bankroll >= MinimumBet) {
             // Enable Betting
@@ -446,7 +455,7 @@ public class GameManager : MonoBehaviour
 
             bankrollText.text = "Balance: $" + player.Bankroll.ToString();
             Debug.Log("Bankroll: " + player.Bankroll);
-            Debug.Log("Place your bet (between " + MinimumBet + " and " + MaximumBet + ").");          
+            Debug.Log("Place your bet (between " + MinimumBet + " and " + MaximumBet + ").");
 
             // Prompt the player to place a bet and continue the game
         }
@@ -495,15 +504,15 @@ public class GameManager : MonoBehaviour
     private IEnumerator DisplayMessage(string message, float duration)
     {
         // Set the message text
-        messageText.text = message;
+        messageImage.GetComponentInChildren<TextMeshProUGUI>().text = message;
 
         // Show the message text element
-        messageText.gameObject.SetActive(true);
+        messageImage.gameObject.SetActive(true);
 
         // Wait for the specified duration
         yield return new WaitForSeconds(duration);
 
         // Hide the message text element
-        messageText.gameObject.SetActive(false);
+        messageImage.gameObject.SetActive(false);
     }
 }
