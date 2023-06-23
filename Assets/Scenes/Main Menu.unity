@@ -2725,7 +2725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuPanel: {fileID: 1299547793}
   currentPanel: {fileID: 1940339614}
-  delayTime: 0
+  delayTime: 0.25
 --- !u!1 &567908298
 GameObject:
   m_ObjectHideFlags: 0
@@ -5550,7 +5550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuPanel: {fileID: 1299547793}
   currentPanel: {fileID: 296280671}
-  delayTime: 1
+  delayTime: 0.25
 --- !u!82 &1270069831
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7778,7 +7778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuPanel: {fileID: 1299547793}
   currentPanel: {fileID: 1467266743}
-  delayTime: 1
+  delayTime: 0.25
 --- !u!82 &1759310150
 AudioSource:
   m_ObjectHideFlags: 0
