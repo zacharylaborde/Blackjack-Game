@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour
         soundEffectsSource = gameObject.AddComponent<AudioSource>();
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
 
+        // Start playing the background music
+        backgroundMusicSource.Play();
+
         // Initialize the confirmation dialog
         quitConfirmationDialog.SetActive(false);
         confirmQuitButton.onClick.AddListener(ConfirmQuit);
