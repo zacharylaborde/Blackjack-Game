@@ -499,6 +499,11 @@ public class GameManager : MonoBehaviour
     {
         // Hide the confirmation dialog
         quitConfirmationDialog.SetActive(false);
+
+        // Enable New Game and New Round buttons
+        newGameButton.interactable = true;
+        newRoundButton.interactable = true;
+        quitButton.interactable = true;
     }
 
     // Method to handle the quit button click
@@ -506,6 +511,11 @@ public class GameManager : MonoBehaviour
     {
         // Show the quit confirmation dialog
         quitConfirmationDialog.SetActive(true);
+
+        // Disable New Game and New Round buttons while dialog box is up
+        newGameButton.interactable = false;
+        newRoundButton.interactable = false;
+        quitButton.interactable = false;
     }
 
     // Method to restart the game
