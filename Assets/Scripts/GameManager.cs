@@ -48,6 +48,11 @@ public class GameManager : MonoBehaviour
     public AudioSource soundEffectsSource;
     public AudioSource backgroundMusicSource;
 
+    // Confirmation Dialog
+    public GameObject quitConfirmationDialog;
+    public Button confirmQuitButton;
+    public Button cancelQuitButton;
+
     private void Start()
     {
         StartGame();
@@ -59,6 +64,11 @@ public class GameManager : MonoBehaviour
         // Initialize Audio Sources
         soundEffectsSource = gameObject.AddComponent<AudioSource>();
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+
+        // Initialize the confirmation dialog
+        quitConfirmationDialog.SetActive(false);
+        confirmQuitButton.onClick.AddListener(ConfirmQuit);
+        cancelQuitButton.onClick.AddListener(CancelQuit);
 
         // Initialize the deck
         deck = GameObject.Find("Deck").GetComponent<Deck>();
@@ -433,13 +443,21 @@ public class GameManager : MonoBehaviour
         // Disable the text for player and dealer hands
         playerHandText.gameObject.SetActive(false);
         dealerHandText.gameObject.SetActive(false);
-        // Disable New Round and Quit buttons
+        // Disable all buttons
         newGameButton.gameObject.SetActive(false);
         newGameButton.interactable = false;
         newRoundButton.gameObject.SetActive(false);
         newRoundButton.interactable = false;
         quitButton.gameObject.SetActive(false);
         quitButton.interactable = false;
+        dealButton.gameObject.SetActive(false);
+        dealButton.interactable = false;
+        hitButton.gameObject.SetActive(false);
+        hitButton.interactable = false;
+        standButton.gameObject.SetActive(false);
+        standButton.interactable = false;
+        resetBetButton.gameObject.SetActive(false);
+        resetBetButton.interactable = false;
 
         if (player.Bankroll >= MinimumBet) {
             // Enable Betting
@@ -466,10 +484,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Method to quit the application
-    public void QuitApplication()
+    // Method to confirm quitting the game
+    void ConfirmQuit()
     {
+        // Quit the application
         Application.Quit();
+    }
+
+    // Method to cancel quitting the game
+    void CancelQuit()
+    {
+        // Hide the confirmation dialog
+        quitConfirmationDialog.SetActive(false);
+    }
+
+    // Method to handle the quit button click
+    public void QuitGame()
+    {
+        // Show the quit confirmation dialog
+        quitConfirmationDialog.SetActive(true);
     }
 
     // Method to restart the game
