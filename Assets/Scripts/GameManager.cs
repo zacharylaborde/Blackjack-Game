@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private Card dealerCard1;
     private GameObject bettingChips;
     private int initialBankroll = 1000;
+    public GameObject pauseMenu;
 
     // Constants
     private const int MinimumBet = 1;
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     public Button newGameButton;
     public Button newRoundButton;
     public Button quitButton;
+    public Button pauseMenuQuitButton;
+    public Button pauseMenuSettingsButton;
 
     // Game Text
     public TextMeshProUGUI bankrollText;
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     public List<ButtonInteractable> buttonInteractables;    // List of ButtonInteractable scripts
     public List<TextMeshProUGUI> chipTexts;                 // List of Chip Texts
+    private List<Button> gameButtons;
 
     // Sound and Music
     public AudioClip blackjackSound;
@@ -53,9 +57,24 @@ public class GameManager : MonoBehaviour
     public Button confirmQuitButton;
     public Button cancelQuitButton;
 
+    private bool isQuitConfirmationDialogActive = false;
+    private bool isGamePaused = false;
+
     private void Start()
     {
         StartGame();
+
+        // Get references to all game buttons
+        gameButtons = new List<Button>()
+        {
+            dealButton,
+            hitButton,
+            standButton,
+            resetBetButton,
+            newGameButton,
+            newRoundButton,
+            quitButton
+        };
     }
 
     // Start the game
@@ -497,6 +516,10 @@ public class GameManager : MonoBehaviour
     // Method to cancel quitting the game
     void CancelQuit()
     {
+        isQuitConfirmationDialogActive = false;
+        pauseMenuQuitButton.interactable = true;
+        pauseMenuSettingsButton.interactable = true;
+
         // Hide the confirmation dialog
         quitConfirmationDialog.SetActive(false);
 
@@ -507,8 +530,12 @@ public class GameManager : MonoBehaviour
     }
 
     // Method to handle the quit button click
-    public void QuitGame()
+    public void OpenQuitConfirmationDialog()
     {
+        isQuitConfirmationDialogActive = true;
+        pauseMenuQuitButton.interactable = false;
+        pauseMenuSettingsButton.interactable = false;
+
         // Show the quit confirmation dialog
         quitConfirmationDialog.SetActive(true);
 
@@ -525,6 +552,30 @@ public class GameManager : MonoBehaviour
 
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Method to toggle the pause menu
+    private void TogglePauseMenu()
+    {
+        // Toggle the pause menu active state
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
+
+        // Enable or disable all game buttons based on the pause menu state
+        foreach (Button button in gameButtons) {
+            button.interactable = !pauseMenu.activeSelf;
+        }
+
+        foreach (var buttonInteractable in buttonInteractables) {
+            if (buttonInteractable != null) {
+                buttonInteractable.isInteractable = !pauseMenu.activeSelf;
+            }
+        }
+
+        // Toggle the game paused flag
+        isGamePaused = pauseMenu.activeSelf;
+
+        // Pause or resume the game
+        //Time.timeScale = pauseMenu.activeSelf ? 0f : 1f;
     }
 
     // Method for post-round actions
@@ -560,5 +611,22 @@ public class GameManager : MonoBehaviour
 
         // Hide the message text element
         messageImage.gameObject.SetActive(false);
+    }
+
+
+    // Update is called once per frame
+    private void Update()
+    {
+        // Check if the quit confirmation dialog is active
+        if (isQuitConfirmationDialogActive) {
+            // Don't allow opening the pause menu
+            return;
+        }
+
+        // Open pause menu when the Escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            // Display the pause menu
+            TogglePauseMenu();
+        }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -273,10 +273,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570c5f3217a2204db08e589ba3526e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAnimator: 1
   aboutText: {fileID: 2123182388}
 --- !u!95 &179632394
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -293,7 +294,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &179632395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1359,7 +1361,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9137255, g: 0.9137255, b: 0.9137255, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
@@ -1421,7 +1423,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 --- !u!95 &418119703
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1438,7 +1440,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &418119704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1451,6 +1454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570c5f3217a2204db08e589ba3526e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAnimator: 1
   aboutText: {fileID: 0}
 --- !u!114 &418119705
 MonoBehaviour:
@@ -1869,10 +1873,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570c5f3217a2204db08e589ba3526e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAnimator: 1
   aboutText: {fileID: 0}
 --- !u!95 &499370656
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1889,7 +1894,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &499370657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1912,7 +1918,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9137255, g: 0.9137255, b: 0.9137255, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
@@ -2596,10 +2602,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570c5f3217a2204db08e589ba3526e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAnimator: 0
   aboutText: {fileID: 0}
 --- !u!95 &564365523
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2616,7 +2623,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &564365524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3035,10 +3043,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570c5f3217a2204db08e589ba3526e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAnimator: 1
   aboutText: {fileID: 0}
 --- !u!95 &610187427
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3055,7 +3064,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &610187428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3078,7 +3088,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9137255, g: 0.9137255, b: 0.9137255, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
@@ -5770,10 +5780,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570c5f3217a2204db08e589ba3526e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAnimator: 0
   aboutText: {fileID: 0}
 --- !u!95 &1270069835
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5790,7 +5801,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1270069836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7998,10 +8010,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570c5f3217a2204db08e589ba3526e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAnimator: 0
   aboutText: {fileID: 0}
 --- !u!95 &1759310154
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8018,7 +8031,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1759310155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8171,10 +8185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570c5f3217a2204db08e589ba3526e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasAnimator: 1
   aboutText: {fileID: 0}
 --- !u!95 &1775064103
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8191,7 +8206,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1775064104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8214,7 +8230,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9137255, g: 0.9137255, b: 0.9137255, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
