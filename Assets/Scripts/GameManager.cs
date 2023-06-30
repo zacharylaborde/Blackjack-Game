@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private GameObject bettingChips;
     private int initialBankroll = 1000;
     public GameObject pauseMenu;
+    public GameObject naturalBlackjackParticlesPrefab;
+    public float particleEffectDuration = 2f;
 
     // Constants
     private const int MinimumBet = 1;
@@ -56,9 +58,6 @@ public class GameManager : MonoBehaviour
     public GameObject quitConfirmationDialog;
     public Button confirmQuitButton;
     public Button cancelQuitButton;
-
-    // Firework
-    public GameObject fireWork;
 
     private bool isQuitConfirmationDialogActive = false;
     private bool isGamePaused = false;
@@ -214,7 +213,6 @@ public class GameManager : MonoBehaviour
 
         // Check if the player has natural 21
         if (player.CalculateHandValue() == 21) {
-            ShowFirework();
             EvaluateRoundResult();
             UpdateBankroll();
             PostRoundActions();
@@ -387,6 +385,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player has blackjack! Player wins.");
             messageImage.GetComponentInChildren<TextMeshProUGUI>().text = "Player Wins!";
             soundEffectsSource.PlayOneShot(blackjackSound, 1.0f);
+
+            // Instantiate the particle effect at the position specified by the prefab
+            GameObject particleEffect = Instantiate(naturalBlackjackParticlesPrefab, new Vector3(0, 1, -0.1f), Quaternion.identity);
+
+            // Play the particle effect for the specified duration
+            Destroy(particleEffect, particleEffectDuration);
         }
         else if (playerHandValue > 21) {
             // Player busts, dealer wins
@@ -421,7 +425,7 @@ public class GameManager : MonoBehaviour
 
         // Enable round result message to player
         messageImage.gameObject.SetActive(true);
-    }
+}
 
     // Updates the player's bankroll based on the round result
     void UpdateBankroll()
@@ -599,19 +603,6 @@ public class GameManager : MonoBehaviour
         // Enable Quit button
         quitButton.gameObject.SetActive(true);
         quitButton.interactable = true;
-    }
-
-    // Show the firework object then hide it after 3 seconds
-    public void ShowFirework()
-    {
-        fireWork.SetActive(true);
-        StartCoroutine(RemoveAfterSeconds(3, fireWork));
-    }
-
-    private IEnumerator RemoveAfterSeconds(int seconds, GameObject obj)
-    {
-        yield return new WaitForSeconds(seconds);
-        obj.SetActive(false);
     }
 
     // Method to display a message for a specific duration
