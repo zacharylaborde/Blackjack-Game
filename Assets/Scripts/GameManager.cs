@@ -57,6 +57,9 @@ public class GameManager : MonoBehaviour
     public Button confirmQuitButton;
     public Button cancelQuitButton;
 
+    // Firework
+    public GameObject fireWork;
+
     private bool isQuitConfirmationDialogActive = false;
     private bool isGamePaused = false;
 
@@ -211,6 +214,7 @@ public class GameManager : MonoBehaviour
 
         // Check if the player has natural 21
         if (player.CalculateHandValue() == 21) {
+            ShowFirework();
             EvaluateRoundResult();
             UpdateBankroll();
             PostRoundActions();
@@ -595,6 +599,19 @@ public class GameManager : MonoBehaviour
         // Enable Quit button
         quitButton.gameObject.SetActive(true);
         quitButton.interactable = true;
+    }
+
+    // Show the firework object then hide it after 3 seconds
+    public void ShowFirework()
+    {
+        fireWork.SetActive(true);
+        StartCoroutine(RemoveAfterSeconds(3, fireWork));
+    }
+
+    private IEnumerator RemoveAfterSeconds(int seconds, GameObject obj)
+    {
+        yield return new WaitForSeconds(seconds);
+        obj.SetActive(false);
     }
 
     // Method to display a message for a specific duration
