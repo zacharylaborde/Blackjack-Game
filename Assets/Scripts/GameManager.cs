@@ -425,7 +425,7 @@ public class GameManager : MonoBehaviour
 
         // Enable round result message to player
         messageImage.gameObject.SetActive(true);
-}
+    }
 
     // Updates the player's bankroll based on the round result
     void UpdateBankroll()
