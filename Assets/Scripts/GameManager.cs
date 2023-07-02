@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private Card dealerCard1;
     private GameObject bettingChips;
     private int initialBankroll = 1000;
+    private double amountWon = 0;
     public GameObject pauseMenu;
     public GameObject naturalBlackjackParticlesPrefab;
     public float particleEffectDuration = 2f;
@@ -437,20 +438,24 @@ public class GameManager : MonoBehaviour
             // Player busts, lose the bet
         }
         else if (dealerHandValue > 21) {
-            // Dealer busts, win the bet; Payout is 1:1
-            player.Bankroll += player.CurrentBet * 2;
+            // Dealer busts, player wins; Payout is 1:1
+            amountWon = player.CurrentBet * 2;                        
+            StartCoroutine(IncrementBalance()); // Increment the balance gradually
         }
         else if (playerHandValue == dealerHandValue) {
             // It's a tie, return the bet
-            player.Bankroll += player.CurrentBet;
+            amountWon = player.CurrentBet;
+            player.Bankroll += amountWon;
         }
         else if (playerHandValue == 21 && player.Hand.Count == 2) {
             // Player has a natural blackjack, Payout is 3:2
-            player.Bankroll += (int)System.Math.Floor(player.CurrentBet * 2.5);
+            amountWon = (int)System.Math.Floor(player.CurrentBet * 2.5);            
+            StartCoroutine(IncrementBalance()); // Increment the balance gradually
         }
         else if (playerHandValue > dealerHandValue) {
             // Player wins, win the bet; Payout is 1:1
-            player.Bankroll += player.CurrentBet * 2;
+            amountWon = player.CurrentBet * 2;            
+            StartCoroutine(IncrementBalance()); // Increment the balance gradually
         }
         else {
             // Dealer wins, lose the bet
@@ -461,8 +466,19 @@ public class GameManager : MonoBehaviour
 
         // Update UI for Bankroll and Bet
         bankrollText.text = "Balance: $" + player.Bankroll.ToString();
-        betText.text = "Bet: $" + player.CurrentBet.ToString();
+        betText.text = "Bet: $" + player.CurrentBet.ToString();        
+    }
 
+    // Coroutine to gradually increment the player's balance
+    IEnumerator IncrementBalance()
+    {
+        int incrementAmount = (int)System.Math.Floor(amountWon / 10f); // Increment in 10 steps
+
+        for (int i = 0; i < 10; i++) {
+            player.Bankroll += incrementAmount;
+            bankrollText.text = "Balance: $" + player.Bankroll.ToString();
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     // Prompts the player to start a new round or quit the game
