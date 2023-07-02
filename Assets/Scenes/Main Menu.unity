@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -275,9 +275,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasAnimator: 1
   aboutText: {fileID: 2123182388}
+  quitConfirmationDialog: {fileID: 0}
 --- !u!95 &179632394
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -294,8 +295,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &179632395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,6 +586,7 @@ MonoBehaviour:
   yourSceneName: 
   delay: 0
   yourPanel: {fileID: 296280671}
+  panelToDisable: {fileID: 0}
   isSceneLoading: 0
 --- !u!1 &180123650
 GameObject:
@@ -1337,7 +1338,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 420}
+  m_SizeDelta: {x: 450, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &418119700
 MonoBehaviour:
@@ -1403,7 +1404,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5bad88f66575b8641abb2540539073c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a716a1ab2c9e8d145895f15f2916acff, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1423,7 +1424,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 --- !u!95 &418119703
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1440,8 +1441,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &418119704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,6 +1456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasAnimator: 1
   aboutText: {fileID: 0}
+  quitConfirmationDialog: {fileID: 0}
 --- !u!114 &418119705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1679,6 +1680,7 @@ MonoBehaviour:
   yourSceneName: In game
   delay: 0
   yourPanel: {fileID: 0}
+  panelToDisable: {fileID: 0}
   isSceneLoading: 1
 --- !u!1 &455647658
 GameObject:
@@ -1859,7 +1861,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 420}
+  m_SizeDelta: {x: 450, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &499370655
 MonoBehaviour:
@@ -1875,9 +1877,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasAnimator: 1
   aboutText: {fileID: 0}
+  quitConfirmationDialog: {fileID: 0}
 --- !u!95 &499370656
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1894,8 +1897,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &499370657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1960,7 +1962,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5bad88f66575b8641abb2540539073c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 70c30ad0f807dbe408e20f1fe82a0cb0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2201,6 +2203,7 @@ MonoBehaviour:
   yourSceneName: 
   delay: 0
   yourPanel: {fileID: 1940339614}
+  panelToDisable: {fileID: 0}
   isSceneLoading: 0
 --- !u!1 &560501256
 GameObject:
@@ -2604,9 +2607,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasAnimator: 0
   aboutText: {fileID: 0}
+  quitConfirmationDialog: {fileID: 0}
 --- !u!95 &564365523
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2623,8 +2627,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &564365524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2821,7 +2824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -665.47, y: 0}
+  m_AnchoredPosition: {x: -747.2, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &592026029
@@ -2842,7 +2845,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 80
+  m_Spacing: -65
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -3029,7 +3032,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 420}
+  m_SizeDelta: {x: 450, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &610187426
 MonoBehaviour:
@@ -3045,9 +3048,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasAnimator: 1
   aboutText: {fileID: 0}
+  quitConfirmationDialog: {fileID: 0}
 --- !u!95 &610187427
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3064,8 +3068,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &610187428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3130,7 +3133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5bad88f66575b8641abb2540539073c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aafdaac778c5dbd428b4ce3e0741a6ea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3794,10 +3797,10 @@ RectTransform:
   m_Father: {fileID: 499370654}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchorMin: {x: 0.2, y: 0.033380955}
+  m_AnchorMax: {x: 0.8, y: 1}
+  m_AnchoredPosition: {x: -0.21859741, y: -9.212097}
+  m_SizeDelta: {x: -4.4373016, y: -5.5417995}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &769058968
 MonoBehaviour:
@@ -3882,7 +3885,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 51.311523, z: 0, w: 0}
+  m_margin: {x: 0, y: 1.4224092, z: -1.5234138, w: 6.0476837}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3929,10 +3932,10 @@ RectTransform:
   m_Father: {fileID: 1775064101}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchorMin: {x: 0.20444445, y: 0.043}
+  m_AnchorMax: {x: 0.78888893, y: 0.96900004}
+  m_AnchoredPosition: {x: -3.0352936, y: -2.444397}
+  m_SizeDelta: {x: 8.610199, y: 0.8757992}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &786274584
 MonoBehaviour:
@@ -4017,7 +4020,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 51.311523, z: 0, w: 0}
+  m_margin: {x: 0, y: 1.4213104, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5782,9 +5785,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasAnimator: 0
   aboutText: {fileID: 0}
+  quitConfirmationDialog: {fileID: 0}
 --- !u!95 &1270069835
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5801,8 +5805,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1270069836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6354,10 +6357,10 @@ RectTransform:
   m_Father: {fileID: 610187425}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchorMin: {x: 0.1911111, y: 0.045380954}
+  m_AnchorMax: {x: 0.79111105, y: 0.9666191}
+  m_AnchoredPosition: {x: -0.00012207031, y: -3.4344025}
+  m_SizeDelta: {x: -0.000091553, y: 6.8689}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1322584610
 MonoBehaviour:
@@ -6442,7 +6445,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 56.446762, z: 0, w: 0}
+  m_margin: {x: 5.614914, y: -1.0026703, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8012,9 +8015,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasAnimator: 0
   aboutText: {fileID: 0}
+  quitConfirmationDialog: {fileID: 0}
 --- !u!95 &1759310154
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8031,8 +8035,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1759310155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8171,7 +8174,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 420}
+  m_SizeDelta: {x: 450, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1775064102
 MonoBehaviour:
@@ -8187,9 +8190,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasAnimator: 1
   aboutText: {fileID: 0}
+  quitConfirmationDialog: {fileID: 0}
 --- !u!95 &1775064103
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8206,8 +8210,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1775064104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8272,7 +8275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5bad88f66575b8641abb2540539073c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a97baee78dcb88a48976951cd9e23a1b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8513,6 +8516,7 @@ MonoBehaviour:
   yourSceneName: 
   delay: 0
   yourPanel: {fileID: 1467266743}
+  panelToDisable: {fileID: 0}
   isSceneLoading: 0
 --- !u!1 &1837557997
 GameObject:
@@ -9103,10 +9107,10 @@ RectTransform:
   m_Father: {fileID: 418119699}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchorMin: {x: 0.2, y: 0.03814286}
+  m_AnchorMax: {x: 0.79333335, y: 1}
+  m_AnchoredPosition: {x: -0.011703491, y: -7.1884003}
+  m_SizeDelta: {x: 4.6100006, y: -9.5889}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2052242924
 MonoBehaviour:
@@ -9191,7 +9195,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 51.311523, z: 0, w: 0}
+  m_margin: {x: 0, y: 2.9328613, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
