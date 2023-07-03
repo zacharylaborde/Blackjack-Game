@@ -6,8 +6,8 @@ public class ButtonInteractable : MonoBehaviour
 {
     private GameManager gameManager;
     public int betAmount;
-
     public AudioSource audioSourceClick;
+    public AudioSource invalidChipClick;
 
     // Flag to control script functionality
     public bool isInteractable = true;
@@ -24,8 +24,11 @@ public class ButtonInteractable : MonoBehaviour
         if (isInteractable) {
             // Call the method in the GameManager script to interact with the button
             gameManager.PlaceBet(betAmount);
-
             audioSourceClick.Play();
+        }
+        else
+        {
+            invalidChipClick.Play();
         }
     }
 }

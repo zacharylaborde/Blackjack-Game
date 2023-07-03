@@ -62,6 +62,9 @@ public class GameManager : MonoBehaviour
     private bool isQuitConfirmationDialogActive = false;
     private bool isGamePaused = false;
 
+    //Couroutines
+    private Coroutine countingCoroutine;
+
     private void Start()
     {
         StartGame();
@@ -276,8 +279,20 @@ public class GameManager : MonoBehaviour
             bool canAffordChip = player.Bankroll >= chipDenominations[i];
             bool withinBetLimit = player.CurrentBet + chipDenominations[i] <= MaximumBet;
 
-            buttonInteractables[i].gameObject.SetActive(canAffordChip && withinBetLimit);
+
+            Color buttonColor = buttonInteractables[i].gameObject.GetComponent<Renderer>().material.color;
+            buttonInteractables[i].isInteractable = canAffordChip && withinBetLimit;
             chipTexts[i].gameObject.SetActive(canAffordChip && withinBetLimit);
+            if (!buttonInteractables[i].isInteractable)
+            {
+                Color newButtonColor = new Color(buttonColor.r, buttonColor.g, buttonColor.b, 0.5f);
+                buttonInteractables[i].gameObject.GetComponent<Renderer>().material.SetColor("_Color", newButtonColor);
+            }
+            else
+            {
+                Color newButtonColor = new Color(buttonColor.r, buttonColor.g, buttonColor.b, 1);
+                buttonInteractables[i].gameObject.GetComponent<Renderer>().material.SetColor("_Color", newButtonColor);
+            }
         }
     }
 
@@ -432,6 +447,8 @@ public class GameManager : MonoBehaviour
     {
         int playerHandValue = player.CalculateHandValue();
         int dealerHandValue = dealer.CalculateHandValue(true);
+        double initialBankroll = player.Bankroll;
+        bool playerWins = false;
 
         if (playerHandValue > 21) {
             // Player busts, lose the bet
@@ -439,6 +456,7 @@ public class GameManager : MonoBehaviour
         else if (dealerHandValue > 21) {
             // Dealer busts, win the bet; Payout is 1:1
             player.Bankroll += player.CurrentBet * 2;
+            playerWins = true;
         }
         else if (playerHandValue == dealerHandValue) {
             // It's a tie, return the bet
@@ -447,10 +465,12 @@ public class GameManager : MonoBehaviour
         else if (playerHandValue == 21 && player.Hand.Count == 2) {
             // Player has a natural blackjack, Payout is 3:2
             player.Bankroll += (int)System.Math.Floor(player.CurrentBet * 2.5);
+            playerWins = true;
         }
         else if (playerHandValue > dealerHandValue) {
             // Player wins, win the bet; Payout is 1:1
             player.Bankroll += player.CurrentBet * 2;
+            playerWins = true;
         }
         else {
             // Dealer wins, lose the bet
@@ -459,10 +479,42 @@ public class GameManager : MonoBehaviour
         // Reset player's current bet
         player.CurrentBet = 0;
 
-        // Update UI for Bankroll and Bet
-        bankrollText.text = "Balance: $" + player.Bankroll.ToString();
-        betText.text = "Bet: $" + player.CurrentBet.ToString();
 
+        // Update UI for Bankroll and Bet. Slide the bankroll number up if player wins to make it more celebratory
+        if (playerWins)
+        {
+            if (countingCoroutine != null)
+            {
+                StopCoroutine(countingCoroutine);
+            }
+            //Coroutines are used to update visuals across frames, otherwise the number will slide in the background but will instantly update to the end value in the UI.
+            countingCoroutine = StartCoroutine(SlideNumberUp(initialBankroll, player.Bankroll));
+        }
+        else
+        {
+            bankrollText.text = "Balance: $" + player.Bankroll.ToString();
+        }
+        betText.text = "Bet: $" + player.CurrentBet.ToString();
+    }
+
+    //Method to visually slide a number up.
+    private IEnumerator SlideNumberUp(double initialValue, double endValue)
+    {
+        float animationTime = 1f;
+        int updateFPS = 30;
+        WaitForSeconds wait = new WaitForSeconds(1f / updateFPS);
+        double currentValue = initialValue;
+        int stepValue = Mathf.CeilToInt(((float)endValue - (float)initialValue) / (animationTime * updateFPS));
+        while (currentValue < endValue)
+        {
+            currentValue += stepValue;
+            if (currentValue > endValue)
+            {
+                currentValue = endValue;
+            }
+            bankrollText.text = "Balance: $" + currentValue.ToString();
+            yield return wait;
+        }
     }
 
     // Prompts the player to start a new round or quit the game
