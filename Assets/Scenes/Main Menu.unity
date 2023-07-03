@@ -1186,38 +1186,34 @@ MonoBehaviour:
 
 
 
-    Zachary Laborde: [add
-    what we did for the porject]
+    Zachary Laborde
 
 
-    Christopher Porter:  [add what we did for
-    the porject]
+    William
+    Jackson
+
+    
+
+    Christopher Porter
 
 
-
-    Michael Gay:  [add what we did for the porject]
-
+    Michael Gay
 
 
-    Kristen
-    Nguyen:  [add what we did for the porject]
-
-
-
-    William Jackson:  [add what
-    we did for the porject]
+    Kristen Nguyen
 
 
 
-    We hope you enjoy playing our game as much as
-    we''ve enjoyed creating it. As we continue to develop and refine this Blackjack
-    game, we welcome your feedback and suggestions. We believe that with your support,
-    we can make this the best online Blackjack game available!
+
+    We
+    hope you enjoy playing our game as much as we''ve enjoyed creating it. As we
+    continue to develop and refine this Blackjack game, we welcome your feedback
+    and suggestions. We believe that with your support, we can make this the best
+    online Blackjack game available!
 
 
 
-    Thank you for
-    playing!'
+    Thank you for playing!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -1251,7 +1247,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4675,7 +4671,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1047065303}
   m_Direction: 2
   m_Value: 1.0000004
-  m_Size: 0.33876532
+  m_Size: 0.33876535
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
