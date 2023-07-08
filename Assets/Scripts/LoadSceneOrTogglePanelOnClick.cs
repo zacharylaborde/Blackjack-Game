@@ -45,6 +45,20 @@ public class LoadSceneOrTogglePanelOnClick : MonoBehaviour
             if (yourPanel != null)
             {
                 yourPanel.SetActive(!yourPanel.activeSelf);
+                Debug.Log("Your panel name: " + yourPanel.name);
+
+                // Prepare to reset the scrollbar of the About Panel UI
+                if (yourPanel.name.Equals("About Panel"))
+                {
+                    // Traverse the tree to get the scrollbar game object
+                    GameObject scrollbar = yourPanel.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject;
+
+                    // Get the scrollbar component from the game object
+                    Scrollbar sb = scrollbar.GetComponentInChildren<Scrollbar>();
+
+                    // Reset it to 1 so it will always be at the top when activated
+                    sb.value = 1;
+                }
             }
         }
     }
