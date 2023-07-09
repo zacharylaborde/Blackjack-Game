@@ -48,7 +48,7 @@ public class LoadSceneOrTogglePanelOnClick : MonoBehaviour
                 Debug.Log("Your panel name: " + yourPanel.name);
 
                 // Prepare to reset the scrollbar of the About Panel UI
-                if (yourPanel.name.Equals("About Panel"))
+                if (yourPanel.name.Equals("About Panel") || yourPanel.name.Equals("How To Play Panel"))
                 {
                     // Traverse the tree to get the scrollbar game object
                     GameObject scrollbar = yourPanel.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject;
