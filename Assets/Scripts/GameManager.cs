@@ -82,6 +82,22 @@ public class GameManager : MonoBehaviour
         };
     }
 
+    // Update is called once per frame
+    private void Update()
+    {
+        // Check if the quit confirmation dialog is active
+        if (isQuitConfirmationDialogActive) {
+            // Don't allow opening the pause menu
+            return;
+        }
+
+        // Open pause menu when the Escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            // Display the pause menu
+            TogglePauseMenu();
+        }
+    }
+
     // Start the game
     void StartGame()
     {
@@ -283,13 +299,11 @@ public class GameManager : MonoBehaviour
             Color buttonColor = buttonInteractables[i].gameObject.GetComponent<Renderer>().material.color;
             buttonInteractables[i].isInteractable = canAffordChip && withinBetLimit;
             chipTexts[i].gameObject.SetActive(canAffordChip && withinBetLimit);
-            if (!buttonInteractables[i].isInteractable)
-            {
+            if (!buttonInteractables[i].isInteractable) {
                 Color newButtonColor = new Color(buttonColor.r, buttonColor.g, buttonColor.b, 0.5f);
                 buttonInteractables[i].gameObject.GetComponent<Renderer>().material.SetColor("_Color", newButtonColor);
             }
-            else
-            {
+            else {
                 Color newButtonColor = new Color(buttonColor.r, buttonColor.g, buttonColor.b, 1);
                 buttonInteractables[i].gameObject.GetComponent<Renderer>().material.SetColor("_Color", newButtonColor);
             }
@@ -481,17 +495,14 @@ public class GameManager : MonoBehaviour
 
 
         // Update UI for Bankroll and Bet. Slide the bankroll number up if player wins to make it more celebratory
-        if (playerWins)
-        {
-            if (countingCoroutine != null)
-            {
+        if (playerWins) {
+            if (countingCoroutine != null) {
                 StopCoroutine(countingCoroutine);
             }
             //Coroutines are used to update visuals across frames, otherwise the number will slide in the background but will instantly update to the end value in the UI.
             countingCoroutine = StartCoroutine(SlideNumberUp(initialBankroll, player.Bankroll));
         }
-        else
-        {
+        else {
             bankrollText.text = "Balance: $" + player.Bankroll.ToString();
         }
         betText.text = "Bet: $" + player.CurrentBet.ToString();
@@ -505,11 +516,9 @@ public class GameManager : MonoBehaviour
         WaitForSeconds wait = new WaitForSeconds(1f / updateFPS);
         double currentValue = initialValue;
         int stepValue = Mathf.CeilToInt(((float)endValue - (float)initialValue) / (animationTime * updateFPS));
-        while (currentValue < endValue)
-        {
+        while (currentValue < endValue) {
             currentValue += stepValue;
-            if (currentValue > endValue)
-            {
+            if (currentValue > endValue) {
                 currentValue = endValue;
             }
             bankrollText.text = "Balance: $" + currentValue.ToString();
@@ -671,22 +680,5 @@ public class GameManager : MonoBehaviour
 
         // Hide the message text element
         messageImage.gameObject.SetActive(false);
-    }
-
-
-    // Update is called once per frame
-    private void Update()
-    {
-        // Check if the quit confirmation dialog is active
-        if (isQuitConfirmationDialogActive) {
-            // Don't allow opening the pause menu
-            return;
-        }
-
-        // Open pause menu when the Escape key is pressed
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            // Display the pause menu
-            TogglePauseMenu();
-        }
     }
 }
